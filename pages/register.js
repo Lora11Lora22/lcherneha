@@ -8,8 +8,8 @@ email: { css: '#input-email' },
 telephone: { css: '#input-telephone' },
 password: {css: '#input-password'},
 confirmPassword: {css: '#input-confirm'},
-privacyPolicyBox: {xpath: '//*[@id="content"]/form/div/div/input[1]'},
-continueButton: {xpath: '//*[@id="content"]/form/div/div/input[2]'},
+privacyBox: {xpath: '//*[@id="content"]/form/div/div/input[1]'},
+clickContinue: {xpath: '//*[@id="content"]/form/div/div/input[2]'},
 registerSuccessText: 'Your Account Has Been Created!',
   
 verifyRegisterAccountText(){
@@ -23,11 +23,8 @@ I.fillField(this.email, user.email);
 I.fillField(this.telephone, user.telephone);
 I.fillField(this.password, user.password);
 I.fillField(this.confirmPassword, user.confirmPassword);
-},
-
-confirmRegistrationAccount() {
-I.click(this.privacyPolicyBox);
-I.click(this.continueButton);
+I.click(this.privacyBox);
+I.click(this.clickContinue);
 },
 
 verifyRegisterSuccessText(){
