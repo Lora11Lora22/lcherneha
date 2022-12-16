@@ -3,7 +3,7 @@ Feature('store');
 Scenario('test something',  ({ I, homePage, registerPage }) => {
 I.openStore();
 homePage.openRegistrationPage();
-registerPage.verifyRegisterAccountText
+registerPage.verifyRegisterAccountText();
 registerPage.fillFirstName('Larysa');
 registerPage.fillLastName('25886');
 registerPage.fillEmail('Qa.qtest@gmail.com');
