@@ -1,3 +1,8 @@
+let productLinks = new DataTable(['link']); 
+productLinks.add(['davert']); 
+productLinks.add(['admin']);
+productLinks.add(['admin']);
+
 let registrationUser = {
     firstName: 'Larysa',
     lastName: '25886',

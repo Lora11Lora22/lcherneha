@@ -1,5 +1,10 @@
 const orderHistory = require("../pages/orderHistory");
 
+let productLinks = new DataTable(['link']);
+productLinks.add(['http://opencart.qatestlab.net/index.php?route=product/product&path=31&product_id=58']);
+productLinks.add(['http://opencart.qatestlab.net/index.php?route=product/product&path=31&product_id=73']);
+productLinks.add(['http://opencart.qatestlab.net/index.php?route=product/product&path=32&product_id=67']);
+
 
 let loginUser = {
     email: 'Qa.testNew@gmail.com',
@@ -22,19 +27,22 @@ let addressees = {
     city: "Kyiv",
 };
 
+const LinksGetter = require('../helpers/productLinksGetter.js');
+let productLinks3 = LinksGetter.getLinks();
+console.log(productLinks3);
+
 Feature('buy product');
 
-Scenario('buy product', async ({ I, productPage, checkoutPage }) => {
+Before(({ I }) => {
     I.login(loginUser);
-    I.openProductPage();
+});
+
+Data(productLinks3).Scenario('buy product', async ({ I, productPage, checkoutPage, current }) => {
+    console.log(current.link)
+    I.openProductPage(current.link);
 
     let price = await productPage.getProductPrice();
     console.log("Product price: " + price);
-
-    productPage.selectColorProduct();
-
-    let colorPrice = await productPage.getColorProductPrice();
-    console.log("Color Price: " + colorPrice);
 
     I.cardProcess();
     I.changeAddress();
@@ -53,7 +61,7 @@ Scenario('buy product', async ({ I, productPage, checkoutPage }) => {
     checkoutPage.confirmOrder();
 
     let calculatedTotalPrice =
-        parseFloat(price) + parseFloat(colorPrice) + parseFloat(deliveryPrice);
+        parseFloat(price) + parseFloat(deliveryPrice);
 
     I.assertEqual(calculatedTotalPrice, parseFloat(totalPrice), "Prices are not match!");
 
