@@ -1,4 +1,5 @@
-const steps_file = require("../steps_file");
+const orderHistory = require("../pages/orderHistory");
+
 
 let loginUser = {
     email: 'Qa.testNew@gmail.com',
@@ -13,7 +14,7 @@ let buyer = {
     postCode: "KP354"
 };
 
-let addressee = {
+let addressees = {
 
     firstName: "Ivan",
     lastName: "Big",
@@ -39,14 +40,14 @@ Scenario('buy product', async ({ I, productPage, checkoutPage }) => {
     I.changeAddress();
     checkoutPage.step2BillingDetails(buyer);
     I.changeShippingAddress();
-    checkoutPage.step3DeliveryDetail(addressee);
+    checkoutPage.step3DeliveryDetail(addressees);
     checkoutPage.deliveryMethod();
     checkoutPage.paymentMethod();
 
-    let deliveryPrice = await productPage.getProductDeliveryPrice();
+    let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
     console.log("Delivery price: " + deliveryPrice);
 
-    let totalPrice = await productPage.getProductTotalPrice();
+    let totalPrice = await checkoutPage.getProductTotalPrice();
     console.log("Total price: " + totalPrice);
 
     checkoutPage.confirmOrder();
@@ -57,7 +58,7 @@ Scenario('buy product', async ({ I, productPage, checkoutPage }) => {
     I.assertEqual(calculatedTotalPrice, parseFloat(totalPrice), "Prices are not match!");
 
     I.openOrderPage();
-    let order = await productPage.getOrderNumber();
+    let order = await orderHistory.getOrderNumber();
     console.log("Order Number: " + order);
 
 }).tag('buy')

@@ -52,6 +52,9 @@ module.exports = function () {
       this.click(radioButtonNewShippingAddress);
     },
 
+    getFloat(value) {
+      return value.replace(/[^0-9\.]+/g, "");
+    },
 
   });
 

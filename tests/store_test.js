@@ -9,7 +9,7 @@ let registrationUser = {
 
 Feature('store');
 
-xScenario('account registration', ({ I, homePage, registerPage }) => {
+Scenario('account registration', ({ I, homePage, registerPage }) => {
     I.openStore();
     homePage.openRegistrationPage();
     registerPage.verifyRegisterAccountText();
