@@ -35,11 +35,11 @@ module.exports = {
   shippingContinueButton: { css: "#button-shipping-address" },
 
 
-  step3DeliveryDetail(addressee) {
-    I.fillField(this.shippingFirstName, addressee.firstName);
-    I.fillField(this.shippingLastName, addressee.lastName);
-    I.fillField(this.shippingFirstAddress, addressee.firstAddress);
-    I.fillField(this.shippingCity, addressee.city);
+  step3DeliveryDetail(addressees) {
+    I.fillField(this.shippingFirstName, addressees.firstName);
+    I.fillField(this.shippingLastName, addressees.lastName);
+    I.fillField(this.shippingFirstAddress, addressees.firstAddress);
+    I.fillField(this.shippingCity, addressees.city);
     I.click(this.shippingContinueButton);
 
   },
@@ -68,9 +68,31 @@ module.exports = {
   confirmOrderButton: { css: "#button-confirm" },
   checkoutSuccessText: 'Your order has been placed!',
 
+  //////////////////////////////////
+
   confirmOrder() {
     I.click(this.confirmOrderButton);
     I.see(this.checkoutSuccessText);
   },
+
+  //////////////////////////////////
+
+  deliveryPriceText: { xpath: "//strong[text()='Flat Shipping Rate:']/ancestor::tr/td[2]" },
+  totalPriceText: { xpath: "//strong[text()='Total:']/ancestor::tr/td[2]" },
+
+  async getProductTotalPrice() {
+    let allPrice = await I.grabTextFrom(this.totalPriceText);
+    let totalPriceResult = I.getFloat(allPrice);
+    return parseFloat(totalPriceResult);
+
+  },
+
+  async getProductDeliveryPrice() {
+    let deliveryPrice = await I.grabTextFrom(this.deliveryPriceText);
+    let deliveryResult = I.getFloat(deliveryPrice);
+    return parseFloat(deliveryResult);
+
+  },
+
 
 }
