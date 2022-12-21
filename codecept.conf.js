@@ -1,4 +1,7 @@
-const { setHeadlessWhen, setCommonPlugins } = require('@codeceptjs/configure');
+const {
+  setHeadlessWhen,
+  setCommonPlugins
+} = require('@codeceptjs/configure');
 // turn on headless mode when running with HEADLESS=true environment variable
 // export HEADLESS=true && npx codeceptjs run
 setHeadlessWhen(process.env.HEADLESS);
@@ -14,11 +17,15 @@ exports.config = {
     Playwright: {
       url: 'http://localhost',
       show: true,
-      browser: 'chromium'
+      browser: 'chromium',
+      waitForNavigation: 'networkidle',
+      waitForTimeout: 5000,
     }
   },
   include: {
-    I: './steps_file.js'
+    "I": "./steps_file.js",
+    "homePage": "./pages/home.js",
+    "registerPage": "./pages/register.js"
   },
   name: 'lcherneha'
 }
