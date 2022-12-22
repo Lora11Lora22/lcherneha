@@ -5,6 +5,14 @@ const radioButtonNewShippingAddress = { css: '#collapse-shipping-address > div >
 
 module.exports = {
 
+  changeAddress() {
+    I.click(radioButtonNewAddress);
+  },
+
+  changeShippingAddress() {
+    I.click(radioButtonNewShippingAddress);
+  },
+
   // STEP 2: BILLING DETAILS 
 
   firstName: { css: "#input-payment-firstname" },
@@ -94,16 +102,6 @@ module.exports = {
     let deliveryResult = I.getFloat(deliveryPrice);
     return parseFloat(deliveryResult);
 
-  },
-
-  /////////////////////////////////////
-
-  changeAddress() {
-    I.click(radioButtonNewAddress);
-  },
-
-  changeShippingAddress() {
-    I.click(radioButtonNewShippingAddress);
   },
 
 }
