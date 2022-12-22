@@ -1,5 +1,7 @@
 const { I } = inject();
 
+const radioButtonNewAddress = { xpath: '//*[@id="collapse-payment-address"]/div/form/div[3]/label' };
+const radioButtonNewShippingAddress = { css: '#collapse-shipping-address > div > form > div:nth-child(3) > label' };
 
 module.exports = {
 
@@ -94,5 +96,14 @@ module.exports = {
 
   },
 
+  /////////////////////////////////////
+
+  changeAddress() {
+    I.click(radioButtonNewAddress);
+  },
+
+  changeShippingAddress() {
+    I.click(radioButtonNewShippingAddress);
+  },
 
 }

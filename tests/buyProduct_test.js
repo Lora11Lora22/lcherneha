@@ -1,10 +1,7 @@
 const orderHistory = require("../pages/orderHistory");
 
-let productLinks = new DataTable(['link']);
-productLinks.add(['http://opencart.qatestlab.net/index.php?route=product/product&path=31&product_id=58']);
-productLinks.add(['http://opencart.qatestlab.net/index.php?route=product/product&path=31&product_id=73']);
-productLinks.add(['http://opencart.qatestlab.net/index.php?route=product/product&path=32&product_id=67']);
 
+let productLinks = new DataTable(['link']);
 
 let loginUser = {
     email: 'Qa.testNew@gmail.com',
@@ -39,15 +36,15 @@ Before(({ I }) => {
 
 Data(productLinks3).Scenario('buy product', async ({ I, productPage, checkoutPage, current }) => {
     console.log(current.link)
-    I.openProductPage(current.link);
+    I.amOnPage(current.link);
 
     let price = await productPage.getProductPrice();
     console.log("Product price: " + price);
 
-    I.cardProcess();
-    I.changeAddress();
+    productPage.cardProcess();
+    checkoutPage.changeAddress();
     checkoutPage.step2BillingDetails(buyer);
-    I.changeShippingAddress();
+    checkoutPage.changeShippingAddress();
     checkoutPage.step3DeliveryDetail(addressees);
     checkoutPage.deliveryMethod();
     checkoutPage.paymentMethod();
