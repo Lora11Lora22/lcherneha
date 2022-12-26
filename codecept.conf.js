@@ -21,10 +21,13 @@ exports.config = {
       waitForNavigation: 'networkidle',
       waitForTimeout: 5000,
     },
-
+    
     "ChaiWrapper": {
       "require": "codeceptjs-chai"
-    }
+    },
+    Converter: {
+      require: './helpers/converter_helper.js',
+    },
   },
   include: {
     "I": "./steps_file.js",
@@ -32,7 +35,8 @@ exports.config = {
     "registerPage": "./pages/register.js",
     "productPage": "./pages/product.js",
     "checkoutPage": "./pages/checkout.js",
-    "orderHistoryPage": "./pages/orderHistory.js"
+    "orderHistoryPage": "./pages/orderHistory.js",
+    "helper": "./helpers/helper.js",
   },
   name: 'lcherneha'
 }

@@ -1,30 +1,23 @@
 const { I } = inject();
 
+const addToCartButton = { xpath: '//*[@id="button-cart"]' };
+const iconCart = { xpath: '//*[@id="cart-total2"]' };
+const checkoutButton = { xpath: '//*[@id="cart"]/ul/li[3]/div/a[2]' };
+
+
 module.exports = {
   priceText: { xpath: '//div[@class="price"]/span' },
-  dropdownElement: { xpath: "//a[contains(@id, 'sbSelector')]" },
-  color: { xpath: `//ul[contains(@id, "sbOptions")]//a[contains(.,"Yellow")]` },
-
 
   async getProductPrice() {
     let product = await I.grabTextFrom(this.priceText);
-    let productResult = I.getFloat(product);
-    return parseFloat(productResult);
-
+   return I.parsePrice(product);
   },
 
-  async getColorProductPrice() {
-    let priceForColor = await I.grabTextFrom(this.dropdownElement)
-    let colorResult = I.getFloat(priceForColor);
-    return parseFloat(colorResult);
+  cardProcess() {
+    I.click(addToCartButton);
+    I.click(iconCart);
+    I.click(checkoutButton);
+
   },
-
-  selectColorProduct() {
-    let colorText = this.color;
-    I.click(this.dropdownElement);
-    I.waitForElement(colorText, 3);
-    I.click(colorText);
-  }
-
 
 }

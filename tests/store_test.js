@@ -1,3 +1,4 @@
+
 let registrationUser = {
     firstName: 'Larysa',
     lastName: '25886',
@@ -15,7 +16,7 @@ Scenario('account registration', ({ I, homePage, registerPage }) => {
     registerPage.verifyRegisterAccountText();
     registerPage.submitRegistrationForm(registrationUser);
 
-    registerPage.verifyRegisterSuccessText();
+    registerPage._verifyRegisterSuccessText();
 
 }
 );
