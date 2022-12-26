@@ -92,16 +92,12 @@ module.exports = {
 
   async getProductTotalPrice() {
     let allPrice = await I.grabTextFrom(this.totalPriceText);
-    let totalPriceResult = I.getFloat(allPrice);
-    return parseFloat(totalPriceResult);
-
+    return I.parsePrice(allPrice);
   },
 
   async getProductDeliveryPrice() {
     let deliveryPrice = await I.grabTextFrom(this.deliveryPriceText);
-    let deliveryResult = I.getFloat(deliveryPrice);
-    return parseFloat(deliveryResult);
-
+    return I.parsePrice(deliveryPrice);
   },
 
 }

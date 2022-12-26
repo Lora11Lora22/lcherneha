@@ -25,45 +25,50 @@ let addressees = {
 };
 
 const LinksGetter = require('../helpers/productLinksGetter.js');
+const home = require("../pages/home");
 let productLinks3 = LinksGetter.getLinks();
 console.log(productLinks3);
 
 Feature('buy product');
 
-Before(({ I }) => {
+Before(async ({ I, homePage }) => {
     I.login(loginUser);
+    console.log(await homePage.checkCartIsEmpty());
+    await homePage.itemsInCart();
+    await homePage.emptyCart();
+
 });
 
-Data(productLinks3).Scenario('buy product', async ({ I, productPage, checkoutPage, current }) => {
+Data(productLinks3).Scenario('buy product', async ({ I, productPage, checkoutPage, current, }) => {
     console.log(current.link)
-    I.amOnPage(current.link);
 
-    let price = await productPage.getProductPrice();
-    console.log("Product price: " + price);
-
-    productPage.cardProcess();
-    checkoutPage.changeAddress();
-    checkoutPage.step2BillingDetails(buyer);
-    checkoutPage.changeShippingAddress();
-    checkoutPage.step3DeliveryDetail(addressees);
-    checkoutPage.deliveryMethod();
-    checkoutPage.paymentMethod();
-
-    let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
-    console.log("Delivery price: " + deliveryPrice);
-
-    let totalPrice = await checkoutPage.getProductTotalPrice();
-    console.log("Total price: " + totalPrice);
-
-    checkoutPage.confirmOrder();
-
-    let calculatedTotalPrice =
-        parseFloat(price) + parseFloat(deliveryPrice);
-
-    I.assertEqual(calculatedTotalPrice, parseFloat(totalPrice), "Prices are not match!");
-
-    I.openOrderPage();
-    let order = await orderHistory.getOrderNumber();
-    console.log("Order Number: " + order);
+    /* I.amOnPage(current.link);
+     let price = await productPage.getProductPrice();
+     console.log("Product price: " + price),
+ 
+     productPage.cardProcess();
+     checkoutPage.changeAddress();
+     checkoutPage.step2BillingDetails(buyer);
+     checkoutPage.changeShippingAddress();
+     checkoutPage.step3DeliveryDetail(addressees);
+     checkoutPage.deliveryMethod();
+     checkoutPage.paymentMethod();
+ 
+     let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
+     console.log("Delivery price: " + deliveryPrice);
+ 
+     let totalPrice = await checkoutPage.getProductTotalPrice();
+     console.log("Total price: " + totalPrice);
+ 
+     checkoutPage.confirmOrder();
+ 
+     let calculatedTotalPrice =
+         parseFloat(price) + parseFloat(deliveryPrice);
+ 
+     I.assertEqual(calculatedTotalPrice, parseFloat(totalPrice), "Prices are not match!");
+ 
+     I.openOrderPage();
+     let order = await orderHistory.getOrderNumber();
+     console.log("Order Number: " + order);*/
 
 }).tag('buy')

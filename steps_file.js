@@ -29,9 +29,7 @@ module.exports = function () {
       this.click(submitButton);
     },
 
-    getFloat(value) {
-      return value.replace(/[^0-9\.]+/g, "");
-    },
+    
 
   });
 

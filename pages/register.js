@@ -25,9 +25,10 @@ module.exports = {
         I.fillField(this.confirmPassword, user.confirmPassword);
         I.click(this.privacyBox);
         I.click(this.clickContinue);
+        this.verifyRegisterAccountText();
     },
 
-    verifyRegisterSuccessText() {
+    _verifyRegisterSuccessText() {
         I.see(this.registerSuccessText);
     }
 

@@ -16,7 +16,7 @@ Scenario('account registration', ({ I, homePage, registerPage }) => {
     registerPage.verifyRegisterAccountText();
     registerPage.submitRegistrationForm(registrationUser);
 
-    registerPage.verifyRegisterSuccessText();
+    registerPage._verifyRegisterSuccessText();
 
 }
 );
