@@ -10,7 +10,7 @@ module.exports = {
 
   async getProductPrice() {
     let product = await I.grabTextFrom(this.priceText);
-   return I.parsePrice(product);
+    return I.parsePrice(product);
   },
 
   cardProcess() {

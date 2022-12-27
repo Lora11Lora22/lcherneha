@@ -7,6 +7,7 @@ module.exports = {
   emptyCartText: { xpath: '//*[@id="cart"]/ul/li/p' },
   cartIcon: { css: '#cart > button > i' },
   trashIcon: { css: "i.linearicons-trash" },
+  addToCartButton: { xpath: '//*[@id="button-cart"]' },
 
   openRegistrationPage() {
     I.click(this.myAccountSpoiler);
@@ -20,8 +21,8 @@ module.exports = {
 
   async emptyCart() {
     let isCartEmpty = await this.checkCartIsEmpty();
+    let amount = await I.grabAttributeFromAll({ css: "i.linearicons-trash" }, "class");
     if (!isCartEmpty) {
-      let amount = await I.grabAttributeFromAll({ css: "i.linearicons-trash" }, "class");
       for (i = 0; i < amount.length; i++) {
         I.click(this.trashIcon);
       }
@@ -31,6 +32,6 @@ module.exports = {
   async itemsInCart() {
     let attributesArray = await I.grabAttributeFromAll({ css: "i.linearicons-trash" }, "class");
     console.log("Array size: " + attributesArray.length);
-  }
+  },
 
 }

@@ -1,4 +1,5 @@
 const { I } = inject();
+const Helper = require('../helpers/helper.js');
 
 const radioButtonNewAddress = { xpath: '//*[@id="collapse-payment-address"]/div/form/div[3]/label' };
 const radioButtonNewShippingAddress = { css: '#collapse-shipping-address > div > form > div:nth-child(3) > label' };
@@ -89,6 +90,7 @@ module.exports = {
 
   deliveryPriceText: { xpath: "//strong[text()='Flat Shipping Rate:']/ancestor::tr/td[2]" },
   totalPriceText: { xpath: "//strong[text()='Total:']/ancestor::tr/td[2]" },
+  unavailablItem: { xpath: `//*[@id="checkout-cart"]/div[contains(.,'Products marked with *** are not available in the desired quantity or not in stock!')]` },
 
   async getProductTotalPrice() {
     let allPrice = await I.grabTextFrom(this.totalPriceText);
@@ -100,4 +102,7 @@ module.exports = {
     return I.parsePrice(deliveryPrice);
   },
 
+  async itemUnavailable() {
+    return await Helper.checkElementIsVisible(this.unavailablItem);
+  },
 }
