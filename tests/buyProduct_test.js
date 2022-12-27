@@ -1,5 +1,5 @@
-const orderHistory = require("../pages/orderHistory");
 
+let productLinks = new DataTable(['link']);
 
 let loginUser = {
     email: 'Qa.testNew@gmail.com',
@@ -22,24 +22,27 @@ let addressees = {
     city: "Kyiv",
 };
 
+const LinksGetter = require('../helpers/productLinksGetter.js');
+let productLinks3 = LinksGetter.getLinks();
+console.log(productLinks3);
+
 Feature('buy product');
 
-Scenario('buy product', async ({ I, productPage, checkoutPage }) => {
+Before(({ I }) => {
     I.login(loginUser);
-    I.openProductPage();
+});
+
+Data(productLinks3).Scenario('buy product', async ({ I, productPage, orderHistoryPage, checkoutPage, current }) => {
+    console.log(current.link)
+    I.amOnPage(current.link);
 
     let price = await productPage.getProductPrice();
     console.log("Product price: " + price);
 
-    productPage.selectColorProduct();
-
-    let colorPrice = await productPage.getColorProductPrice();
-    console.log("Color Price: " + colorPrice);
-
-    I.cardProcess();
-    I.changeAddress();
+    productPage.cardProcess();
+    checkoutPage.changeAddress();
     checkoutPage.step2BillingDetails(buyer);
-    I.changeShippingAddress();
+    checkoutPage.changeShippingAddress();
     checkoutPage.step3DeliveryDetail(addressees);
     checkoutPage.deliveryMethod();
     checkoutPage.paymentMethod();
@@ -53,12 +56,12 @@ Scenario('buy product', async ({ I, productPage, checkoutPage }) => {
     checkoutPage.confirmOrder();
 
     let calculatedTotalPrice =
-        parseFloat(price) + parseFloat(colorPrice) + parseFloat(deliveryPrice);
+        parseFloat(price) + parseFloat(deliveryPrice);
 
     I.assertEqual(calculatedTotalPrice, parseFloat(totalPrice), "Prices are not match!");
 
     I.openOrderPage();
-    let order = await orderHistory.getOrderNumber();
+    let order = await orderHistoryPage.getOrderNumber();
     console.log("Order Number: " + order);
 
 }).tag('buy')

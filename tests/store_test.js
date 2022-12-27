@@ -1,3 +1,4 @@
+
 let registrationUser = {
     firstName: 'Larysa',
     lastName: '25886',
