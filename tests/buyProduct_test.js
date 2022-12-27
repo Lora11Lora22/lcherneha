@@ -1,5 +1,3 @@
-const orderHistory = require("../pages/orderHistory");
-
 
 let productLinks = new DataTable(['link']);
 
@@ -34,7 +32,7 @@ Before(({ I }) => {
     I.login(loginUser);
 });
 
-Data(productLinks3).Scenario('buy product', async ({ I, productPage, checkoutPage, current }) => {
+Data(productLinks3).Scenario('buy product', async ({ I, productPage, orderHistoryPage, checkoutPage, current }) => {
     console.log(current.link)
     I.amOnPage(current.link);
 
@@ -63,7 +61,7 @@ Data(productLinks3).Scenario('buy product', async ({ I, productPage, checkoutPag
     I.assertEqual(calculatedTotalPrice, parseFloat(totalPrice), "Prices are not match!");
 
     I.openOrderPage();
-    let order = await orderHistory.getOrderNumber();
+    let order = await orderHistoryPage.getOrderNumber();
     console.log("Order Number: " + order);
 
 }).tag('buy')
